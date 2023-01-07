@@ -16,7 +16,8 @@ var (
 )
 
 func runRootCmd(cmd *cobra.Command, args []string) {
-	server.Run()
+	err := server.Run()
+	cobra.CheckErr(err)
 }
 
 func main() {

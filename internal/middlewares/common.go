@@ -8,6 +8,6 @@ import (
 
 func AbortWithError(c *gin.Context, err error) {
 	c.String(http.StatusInternalServerError, "%s", err)
-	c.Error(err)
+	_ = c.Error(err)
 	c.Abort()
 }
