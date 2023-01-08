@@ -3,10 +3,13 @@ package server
 import (
 	"github.com/cqroot/todoapp/internal/databases"
 	"github.com/cqroot/todoapp/internal/models"
+	"github.com/cqroot/todoapp/internal/utils"
 )
 
 func Run() error {
 	var err error
+
+	utils.InitLogger(false, false)
 
 	err = databases.InitDatabase()
 	if err != nil {
