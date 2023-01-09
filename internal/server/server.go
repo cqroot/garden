@@ -1,6 +1,9 @@
 package server
 
 import (
+	"fmt"
+
+	"github.com/cqroot/todoapp/internal/configs"
 	"github.com/cqroot/todoapp/internal/databases"
 	"github.com/cqroot/todoapp/internal/models"
 	"github.com/cqroot/todoapp/internal/utils"
@@ -9,7 +12,7 @@ import (
 func Run() error {
 	var err error
 
-	utils.InitLogger(false, false)
+	utils.InitLogger(configs.LogLevel(), false)
 
 	err = databases.InitDatabase()
 	if err != nil {
@@ -22,7 +25,9 @@ func Run() error {
 	}
 
 	r := NewRouter()
-	err = r.Run("127.0.0.1:8000")
+	err = r.Run(
+		fmt.Sprintf("%s:%d", configs.BindIp(), configs.BindPort()),
+	)
 
 	return err
 }
