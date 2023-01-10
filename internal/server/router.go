@@ -13,7 +13,7 @@ import (
 func NewRouter() *gin.Engine {
 	router := gin.New()
 
-	router.Use(middlewares.CustomLogger(func(f middlewares.LogFields) {
+	router.Use(middlewares.LoggerMiddleware(func(f middlewares.LogFields) {
 		utils.Logger().Info(
 			fmt.Sprintf("| %d | %15s | %15s | %-7s %s",
 				f.StatusCode,
@@ -24,6 +24,7 @@ func NewRouter() *gin.Engine {
 			),
 		)
 	}))
+	router.Use(middlewares.CorsMiddleware())
 	router.Use(gin.Recovery())
 
 	v1Group := router.Group("v1")
@@ -32,8 +33,8 @@ func NewRouter() *gin.Engine {
 		{
 			todoGroup.GET("", controllers.GetTodos)
 			todoGroup.PUT("", controllers.UpdateTodo)
-			todoGroup.PUT("/:id", middlewares.ValidateIdMiddleware, controllers.UpdateTodo)
-			todoGroup.GET("/:id", middlewares.ValidateIdMiddleware, controllers.GetTodo)
+			todoGroup.PUT("/:id", middlewares.IdValidationMiddleware, controllers.UpdateTodo)
+			todoGroup.GET("/:id", middlewares.IdValidationMiddleware, controllers.GetTodo)
 		}
 	}
 

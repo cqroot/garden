@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func ValidateIdMiddleware(c *gin.Context) {
+func IdValidationMiddleware(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		AbortWithError(c, err)

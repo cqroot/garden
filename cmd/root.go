@@ -1,4 +1,4 @@
-package main
+package cmd
 
 import (
 	"github.com/spf13/cobra"
@@ -15,12 +15,12 @@ var (
 	}
 )
 
-func runRootCmd(cmd *cobra.Command, args []string) {
-	err := server.Run()
+func Execute() {
+	err := rootCmd.Execute()
 	cobra.CheckErr(err)
 }
 
-func main() {
-	err := rootCmd.Execute()
+func runRootCmd(cmd *cobra.Command, args []string) {
+	err := server.Run()
 	cobra.CheckErr(err)
 }

@@ -4,7 +4,7 @@ test:
 
 .PHONY: run-server
 run-server:
-	@go run $(CURDIR)/cmd/todo-server/main.go
+	@go run $(CURDIR)/main.go
 
 .PHONY: http-test
 http-test:

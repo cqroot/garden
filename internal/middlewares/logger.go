@@ -14,7 +14,7 @@ type LogFields struct {
 	Path       string
 }
 
-func CustomLogger(logFunc func(LogFields)) gin.HandlerFunc {
+func LoggerMiddleware(logFunc func(LogFields)) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		start := time.Now()
 		path := c.Request.URL.Path

@@ -14,9 +14,7 @@ func GetTodos(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, gin.H{
-		"todos": todos,
-	})
+	c.JSON(200, todos)
 }
 
 func UpdateTodo(c *gin.Context) {
