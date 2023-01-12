@@ -6,13 +6,10 @@ import (
 	"github.com/cqroot/todoapp/internal/configs"
 	"github.com/cqroot/todoapp/internal/databases"
 	"github.com/cqroot/todoapp/internal/models"
-	"github.com/cqroot/todoapp/internal/utils"
 )
 
 func Run() error {
 	var err error
-
-	utils.InitLogger(configs.LogLevel(), false)
 
 	err = databases.InitDatabase()
 	if err != nil {
