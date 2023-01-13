@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 
 	"github.com/cqroot/todoapp/internal/middlewares"
@@ -14,7 +16,7 @@ func GetTodos(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, todos)
+	c.JSON(http.StatusOK, todos)
 }
 
 func UpdateTodo(c *gin.Context) {
@@ -36,9 +38,7 @@ func UpdateTodo(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, gin.H{
-		"todo": todo,
-	})
+	c.JSON(http.StatusOK, todo)
 }
 
 func GetTodo(c *gin.Context) {
@@ -48,5 +48,25 @@ func GetTodo(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, todo)
+	c.JSON(http.StatusOK, todo)
+}
+
+func DeleteTodo(c *gin.Context) {
+	err := models.DeleteTodo(c.GetInt("id"))
+	if err != nil {
+		middlewares.AbortWithError(c, err)
+		return
+	}
+
+	c.Status(http.StatusOK)
+}
+
+func MarkTodoDone(c *gin.Context) {
+	err := models.MarkTodoDone(c.GetInt("id"))
+	if err != nil {
+		middlewares.AbortWithError(c, err)
+		return
+	}
+
+	c.Status(http.StatusOK)
 }

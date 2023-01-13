@@ -9,6 +9,7 @@ type Todo struct {
 	Id    int    `json:"id"    gorm:"unique;AUTO_INCREMENT"`
 	Title string `json:"title" gorm:"not null"`
 	Note  string `json:"note"`
+	Done  bool   `json:"done" gorm:"default:false"`
 }
 
 func GetTodos() (*[]Todo, error) {
@@ -32,4 +33,14 @@ func GetTodo(id int) (*Todo, error) {
 
 	err := databases.DB().First(&todo, id).Error
 	return &todo, err
+}
+
+func DeleteTodo(id int) error {
+	return databases.DB().Delete(&Todo{}, id).Error
+}
+
+func MarkTodoDone(id int) error {
+	return databases.DB().
+		Model(&Todo{Id: id}).
+		Update("done", true).Error
 }
