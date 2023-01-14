@@ -6,10 +6,11 @@ import (
 )
 
 type Todo struct {
-	Id    int    `json:"id"    gorm:"unique;AUTO_INCREMENT"`
-	Title string `json:"title" gorm:"not null"`
-	Note  string `json:"note"`
-	Done  bool   `json:"done" gorm:"default:false"`
+	Id      int    `json:"id"    gorm:"unique;AUTO_INCREMENT"`
+	Title   string `json:"title" gorm:"not null"`
+	Note    string `json:"note"`
+	Project int    `json:"project"`
+	Done    bool   `json:"done" gorm:"default:false"`
 }
 
 func GetTodos() (*[]Todo, error) {

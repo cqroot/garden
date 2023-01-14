@@ -36,8 +36,14 @@ func NewRouter() *gin.Engine {
 			todoGroup.PUT("/:id", middlewares.IdValidationMiddleware, controllers.UpdateTodo)
 			todoGroup.GET("/:id", middlewares.IdValidationMiddleware, controllers.GetTodo)
 			todoGroup.DELETE("/:id", middlewares.IdValidationMiddleware, controllers.DeleteTodo)
-
 			todoGroup.PUT("/status/:id", middlewares.IdValidationMiddleware, controllers.MarkTodoDone)
+		}
+
+		projectGroup := v1Group.Group("project")
+		{
+			projectGroup.PUT("/", controllers.UpdateProject)
+			projectGroup.PUT("/:id", middlewares.IdValidationMiddleware, controllers.UpdateProject)
+			projectGroup.DELETE("/:id", middlewares.IdValidationMiddleware, controllers.DeleteProject)
 		}
 	}
 

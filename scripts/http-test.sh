@@ -19,4 +19,4 @@ echo_msg "Update the todo with ID 1"
 curl -i -XPUT http://localhost:8000/v1/todo/1 -d "{\"title\": \"Update at $(date)\"}"
 
 echo_msg "List all Todo"
-curl -i -XGET http://localhost:8000/v1/todo
+curl    -XGET http://localhost:8000/v1/todo | jq .
