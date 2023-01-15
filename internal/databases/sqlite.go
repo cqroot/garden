@@ -1,7 +1,8 @@
 package databases
 
 import (
-	"github.com/adrg/xdg"
+	"path/filepath"
+
 	"go.uber.org/zap"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -12,10 +13,9 @@ import (
 var db *gorm.DB
 
 func InitDatabase() error {
-	dsn, err := xdg.DataFile("garden/garden.db")
-	if err != nil {
-		return err
-	}
+	var err error
+
+	dsn := filepath.Join(app.Config().DataPath(), "garden.db")
 	app.Logger().Debug("Open database", zap.String("DB", dsn))
 
 	db, err = gorm.Open(sqlite.Open(dsn), &gorm.Config{})

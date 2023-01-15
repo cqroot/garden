@@ -1,6 +1,9 @@
 package app
 
-import "github.com/spf13/viper"
+import (
+	"github.com/adrg/xdg"
+	"github.com/spf13/viper"
+)
 
 type configItem struct {
 	Key   string
@@ -15,6 +18,11 @@ type ConfigProvider struct {
 var configProvider ConfigProvider
 
 func InitConfig() error {
+	dataPath, err := xdg.DataFile("garden")
+	if err != nil {
+		return err
+	}
+
 	configProvider = ConfigProvider{
 		configs: []configItem{
 			{
@@ -28,6 +36,10 @@ func InitConfig() error {
 			{
 				Key:   "log_level",
 				Value: "Info",
+			},
+			{
+				Key:   "data_path",
+				Value: dataPath,
 			},
 		},
 		viperInstance: viper.New(),
@@ -61,4 +73,8 @@ func (c *ConfigProvider) BindPort() int {
 
 func (c *ConfigProvider) LogLevel() string {
 	return c.viperInstance.GetString("log_level")
+}
+
+func (c *ConfigProvider) DataPath() string {
+	return c.viperInstance.GetString("data_path")
 }
