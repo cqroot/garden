@@ -46,6 +46,10 @@ func InitLogger(logLevel string, caller bool) {
 	} else {
 		zapLogger = zap.New(core)
 	}
+
+	if logLevel == "Debug" {
+		Logger().Debug("Enable debug output")
+	}
 }
 
 func Logger() *zap.Logger {
