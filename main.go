@@ -1,7 +1,7 @@
 package main
 
 import (
-    "github.com/cqroot/todoapp/cmd"
+    "github.com/cqroot/garden/cmd"
 )
 
 func main() {

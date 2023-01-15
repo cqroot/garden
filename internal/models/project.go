@@ -1,7 +1,7 @@
 package models
 
 import (
-	"github.com/cqroot/todoapp/internal/databases"
+	"github.com/cqroot/garden/internal/databases"
 	"gorm.io/gorm/clause"
 )
 

@@ -5,12 +5,14 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/cqroot/todoapp/internal/app"
-	"github.com/cqroot/todoapp/internal/controllers"
-	"github.com/cqroot/todoapp/internal/middlewares"
+	"github.com/cqroot/garden/internal/app"
+	"github.com/cqroot/garden/internal/controllers"
+	"github.com/cqroot/garden/internal/middlewares"
 )
 
 func NewRouter() *gin.Engine {
+	// gin.SetMode(gin.ReleaseMode)
+
 	router := gin.New()
 
 	router.Use(middlewares.LoggerMiddleware(func(f middlewares.LogFields) {
@@ -31,12 +33,12 @@ func NewRouter() *gin.Engine {
 	{
 		todoGroup := v1Group.Group("todo")
 		{
-			todoGroup.GET("", controllers.GetTodos)
-			todoGroup.PUT("", controllers.UpdateTodo)
-			todoGroup.PUT("/:id", middlewares.IdValidationMiddleware, controllers.UpdateTodo)
-			todoGroup.GET("/:id", middlewares.IdValidationMiddleware, controllers.GetTodo)
-			todoGroup.DELETE("/:id", middlewares.IdValidationMiddleware, controllers.DeleteTodo)
-			todoGroup.PUT("/status/:id", middlewares.IdValidationMiddleware, controllers.MarkTodoDone)
+			todoGroup.GET("", controllers.GetTasks)
+			todoGroup.PUT("", controllers.UpdateTask)
+			todoGroup.PUT("/:id", middlewares.IdValidationMiddleware, controllers.UpdateTask)
+			todoGroup.GET("/:id", middlewares.IdValidationMiddleware, controllers.GetTask)
+			todoGroup.DELETE("/:id", middlewares.IdValidationMiddleware, controllers.DeleteTask)
+			todoGroup.PUT("/status/:id", middlewares.IdValidationMiddleware, controllers.MarkTaskDone)
 		}
 
 		projectGroup := v1Group.Group("project")

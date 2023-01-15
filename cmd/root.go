@@ -3,15 +3,15 @@ package cmd
 import (
 	"github.com/spf13/cobra"
 
-	"github.com/cqroot/todoapp/internal/app"
-	"github.com/cqroot/todoapp/internal/server"
+	"github.com/cqroot/garden/internal/app"
+	"github.com/cqroot/garden/internal/server"
 )
 
 var (
 	rootCmd = &cobra.Command{
-		Use:   "todo-server",
-		Short: "Run ToDo Server",
-		Long:  "Run ToDo Server",
+		Use:   "garden",
+		Short: "A self-hosted todo application",
+		Long:  "A self-hosted todo application",
 		Run:   runRootCmd,
 	}
 )

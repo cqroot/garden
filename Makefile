@@ -3,7 +3,7 @@ BUILD_DIR=$(CURDIR)/.build
 
 .PHONY: build
 build:
-	go build -o "$(BUILD_DIR)/$(PROJ_NAME)" main.go
+	go build -o "$(BUILD_DIR)/$(PROJ_NAME)" $(CURDIR)/main.go
 
 .PHONY: run
 run: build

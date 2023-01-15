@@ -1,11 +1,11 @@
 package models
 
-import "github.com/cqroot/todoapp/internal/databases"
+import "github.com/cqroot/garden/internal/databases"
 
 func AutoMigrate() error {
 	var err error
 
-	err = databases.DB().AutoMigrate(&Todo{})
+	err = databases.DB().AutoMigrate(&Task{})
 	if err != nil {
 		return err
 	}

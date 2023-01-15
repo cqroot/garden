@@ -1,4 +1,4 @@
-module github.com/cqroot/todoapp
+module github.com/cqroot/garden
 
 go 1.19
 

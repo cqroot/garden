@@ -5,8 +5,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/cqroot/todoapp/internal/middlewares"
-	"github.com/cqroot/todoapp/internal/models"
+	"github.com/cqroot/garden/internal/middlewares"
+	"github.com/cqroot/garden/internal/models"
 )
 
 func UpdateProject(c *gin.Context) {

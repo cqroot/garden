@@ -3,9 +3,9 @@ package server
 import (
 	"fmt"
 
-	"github.com/cqroot/todoapp/internal/configs"
-	"github.com/cqroot/todoapp/internal/databases"
-	"github.com/cqroot/todoapp/internal/models"
+	"github.com/cqroot/garden/internal/configs"
+	"github.com/cqroot/garden/internal/databases"
+	"github.com/cqroot/garden/internal/models"
 )
 
 func Run() error {
