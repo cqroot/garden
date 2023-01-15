@@ -11,8 +11,8 @@ type TaskStatus uint8
 
 const (
 	Todo  TaskStatus = 0
-	Done             = 1
-	Doing            = 2
+	Done  TaskStatus = 1
+	Doing TaskStatus = 2
 )
 
 type Task struct {
