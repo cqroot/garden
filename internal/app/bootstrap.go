@@ -1,7 +1,10 @@
 package app
 
-import "github.com/cqroot/garden/internal/configs"
-
-func Bootstrap() {
-	InitLogger(configs.LogLevel(), false)
+func Bootstrap() error {
+	err := InitConfig()
+	if err != nil {
+		return err
+	}
+	InitLogger(Config().LogLevel(), false)
+	return nil
 }

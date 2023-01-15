@@ -1,4 +1,4 @@
-PROJ_NAME=todo
+PROJ_NAME=garden
 BUILD_DIR=$(CURDIR)/.build
 
 .PHONY: build

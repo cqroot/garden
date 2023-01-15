@@ -3,7 +3,7 @@ package server
 import (
 	"fmt"
 
-	"github.com/cqroot/garden/internal/configs"
+	"github.com/cqroot/garden/internal/app"
 	"github.com/cqroot/garden/internal/databases"
 	"github.com/cqroot/garden/internal/models"
 )
@@ -23,7 +23,7 @@ func Run() error {
 
 	r := NewRouter()
 	err = r.Run(
-		fmt.Sprintf("%s:%d", configs.BindIp(), configs.BindPort()),
+		fmt.Sprintf("%s:%d", app.Config().BindIp(), app.Config().BindPort()),
 	)
 
 	return err

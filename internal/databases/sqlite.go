@@ -10,7 +10,7 @@ var db *gorm.DB
 func InitDatabase() error {
 	var err error
 
-	dialector := sqlite.Open("todo.db")
+	dialector := sqlite.Open("garden.db")
 	db, err = gorm.Open(dialector, &gorm.Config{})
 	if err != nil {
 		return err

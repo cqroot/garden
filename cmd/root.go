@@ -22,8 +22,9 @@ func Execute() {
 }
 
 func runRootCmd(cmd *cobra.Command, args []string) {
-	app.Bootstrap()
+	err := app.Bootstrap()
+	cobra.CheckErr(err)
 
-	err := server.Run()
+	err = server.Run()
 	cobra.CheckErr(err)
 }

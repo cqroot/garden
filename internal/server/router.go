@@ -31,14 +31,14 @@ func NewRouter() *gin.Engine {
 
 	v1Group := router.Group("v1")
 	{
-		todoGroup := v1Group.Group("todo")
+		taskGroup := v1Group.Group("task")
 		{
-			todoGroup.GET("", controllers.GetTasks)
-			todoGroup.PUT("", controllers.UpdateTask)
-			todoGroup.PUT("/:id", middlewares.IdValidationMiddleware, controllers.UpdateTask)
-			todoGroup.GET("/:id", middlewares.IdValidationMiddleware, controllers.GetTask)
-			todoGroup.DELETE("/:id", middlewares.IdValidationMiddleware, controllers.DeleteTask)
-			todoGroup.PUT("/status/:id", middlewares.IdValidationMiddleware, controllers.MarkTaskDone)
+			taskGroup.GET("", controllers.GetTasks)
+			taskGroup.PUT("", controllers.UpdateTask)
+			taskGroup.PUT("/:id", middlewares.IdValidationMiddleware, controllers.UpdateTask)
+			taskGroup.GET("/:id", middlewares.IdValidationMiddleware, controllers.GetTask)
+			taskGroup.DELETE("/:id", middlewares.IdValidationMiddleware, controllers.DeleteTask)
+			taskGroup.PUT("/status/:id", middlewares.IdValidationMiddleware, controllers.MarkTaskDone)
 		}
 
 		projectGroup := v1Group.Group("project")
