@@ -27,7 +27,7 @@ func InitConfig() error {
 			},
 			{
 				Key:   "log_level",
-				Value: "Debug",
+				Value: "Info",
 			},
 		},
 		viperInstance: viper.New(),

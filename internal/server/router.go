@@ -11,7 +11,9 @@ import (
 )
 
 func NewRouter() *gin.Engine {
-	// gin.SetMode(gin.ReleaseMode)
+	if app.Config().LogLevel() != "Debug" {
+		gin.SetMode(gin.ReleaseMode)
+	}
 
 	router := gin.New()
 

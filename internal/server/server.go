@@ -6,6 +6,7 @@ import (
 	"github.com/cqroot/garden/internal/app"
 	"github.com/cqroot/garden/internal/databases"
 	"github.com/cqroot/garden/internal/models"
+	"go.uber.org/zap"
 )
 
 func Run() error {
@@ -22,6 +23,9 @@ func Run() error {
 	}
 
 	r := NewRouter()
+	app.Logger().Debug("Listen and Server",
+		zap.String("IP", app.Config().BindIp()),
+		zap.Int("Port", app.Config().BindPort()))
 	err = r.Run(
 		fmt.Sprintf("%s:%d", app.Config().BindIp(), app.Config().BindPort()),
 	)

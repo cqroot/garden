@@ -3,11 +3,11 @@ BUILD_DIR=$(CURDIR)/.build
 
 .PHONY: build
 build:
-	go build -o "$(BUILD_DIR)/$(PROJ_NAME)" $(CURDIR)/main.go
+	@go build -o "$(BUILD_DIR)/$(PROJ_NAME)" $(CURDIR)/main.go
 
 .PHONY: run
 run: build
-	@$(BUILD_DIR)/$(PROJ_NAME)
+	@GARDEN_LOG_LEVEL=Debug $(BUILD_DIR)/$(PROJ_NAME)
 
 .PHONY: test
 test:

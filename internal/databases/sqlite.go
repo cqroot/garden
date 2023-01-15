@@ -12,11 +12,11 @@ import (
 var db *gorm.DB
 
 func InitDatabase() error {
-	dsn, err := xdg.DataFile("garden")
+	dsn, err := xdg.DataFile("garden/garden.db")
 	if err != nil {
 		return err
 	}
-	app.Logger().Debug("Open database", zap.String("db", dsn))
+	app.Logger().Debug("Open database", zap.String("DB", dsn))
 
 	db, err = gorm.Open(sqlite.Open(dsn), &gorm.Config{})
 	if err != nil {
