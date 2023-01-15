@@ -1,16 +1,27 @@
 package models
 
 import (
+	"time"
+
 	"github.com/cqroot/garden/internal/databases"
 	"gorm.io/gorm/clause"
 )
 
+type TaskStatus uint8
+
+const (
+	Todo  TaskStatus = 0
+	Done             = 1
+	Doing            = 2
+)
+
 type Task struct {
-	Id      int    `json:"id"    gorm:"unique;AUTO_INCREMENT"`
-	Title   string `json:"title" gorm:"not null"`
-	Note    string `json:"note"`
-	Project int    `json:"project"`
-	Done    bool   `json:"done" gorm:"default:false"`
+	Id      int       `json:"id"    gorm:"unique;AUTO_INCREMENT"`
+	Title   string    `json:"title" gorm:"not null"`
+	Note    string    `json:"note"`
+	Project int       `json:"project"`
+	Due     time.Time `json:"due"`
+	Status  uint8     `json:"done" gorm:"default:0"`
 }
 
 func GetTasks() (*[]Task, error) {
@@ -42,5 +53,5 @@ func DeleteTask(id int) error {
 func MarkTaskDone(id int) error {
 	return databases.DB().
 		Model(&Task{Id: id}).
-		Update("done", true).Error
+		Update("status", Done).Error
 }
