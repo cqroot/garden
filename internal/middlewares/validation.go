@@ -7,11 +7,11 @@ import (
 )
 
 func IdValidationMiddleware(c *gin.Context) {
-	id, err := strconv.Atoi(c.Param("id"))
+    id ,err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
 		AbortWithError(c, err)
 		return
 	}
 
-	c.Set("id", id)
+	c.Set("id", uint(id))
 }

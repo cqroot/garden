@@ -36,7 +36,7 @@ func NewRouter() *gin.Engine {
 		taskGroup := v1Group.Group("task")
 		{
 			taskGroup.GET("", controllers.GetTasks)
-			taskGroup.PUT("", controllers.UpdateTask)
+			taskGroup.PUT("", controllers.PutTask)
 			taskGroup.PUT("/:id", middlewares.IdValidationMiddleware, controllers.UpdateTask)
 			taskGroup.GET("/:id", middlewares.IdValidationMiddleware, controllers.GetTask)
 			taskGroup.DELETE("/:id", middlewares.IdValidationMiddleware, controllers.DeleteTask)
