@@ -1,6 +1,9 @@
 package app
 
 import (
+	"errors"
+	"os"
+
 	"github.com/adrg/xdg"
 	"github.com/spf13/viper"
 )
@@ -17,8 +20,24 @@ type ConfigProvider struct {
 
 var configProvider ConfigProvider
 
-func InitConfig() error {
+func initDataDir() (string, error) {
 	dataPath, err := xdg.DataFile("garden")
+	if err != nil {
+		return "", err
+	}
+
+	if _, err := os.Stat(dataPath); errors.Is(err, os.ErrNotExist) {
+		err := os.MkdirAll(dataPath, os.ModePerm)
+		if err != nil {
+			return "", err
+		}
+	}
+
+	return dataPath, nil
+}
+
+func InitConfig() error {
+	dataPath, err := initDataDir()
 	if err != nil {
 		return err
 	}
