@@ -22,7 +22,11 @@ func Run() error {
 		return err
 	}
 
-	r := NewRouter()
+	r, err := NewRouter()
+	if err != nil {
+		return err
+	}
+
 	app.Logger().Debug("Listen and Server",
 		zap.String("IP", app.Config().BindIp()),
 		zap.Int("Port", app.Config().BindPort()))

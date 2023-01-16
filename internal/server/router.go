@@ -2,15 +2,18 @@ package server
 
 import (
 	"fmt"
+	"io/fs"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 
 	"github.com/cqroot/garden/internal/app"
 	"github.com/cqroot/garden/internal/controllers"
 	"github.com/cqroot/garden/internal/middlewares"
+	"github.com/cqroot/garden/ui"
 )
 
-func NewRouter() *gin.Engine {
+func NewRouter() (*gin.Engine, error) {
 	if app.Config().LogLevel() != "Debug" {
 		gin.SetMode(gin.ReleaseMode)
 	}
@@ -51,5 +54,11 @@ func NewRouter() *gin.Engine {
 		}
 	}
 
-	return router
+	fDist, err := fs.Sub(ui.FEmbedUi, "dist")
+	if err != nil {
+		return nil, err
+	}
+	router.StaticFS("/ui", http.FS(fDist))
+
+	return router, nil
 }
