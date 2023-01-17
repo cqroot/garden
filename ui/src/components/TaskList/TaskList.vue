@@ -1,5 +1,8 @@
 <script setup lang="ts">
-import { MenuSharp as MenuIcon } from "@vicons/ionicons5";
+import {
+  CheckmarkSharp as CheckIcon,
+  MenuSharp as MenuIcon,
+} from "@vicons/ionicons5";
 import { useTaskList } from "./TaskList";
 
 const {
@@ -37,9 +40,9 @@ defineExpose({
       @click="handleTaskClick(task.id, handleTaskClick_)"
     >
       <template #prefix>
-        <n-button quaternary circle>
+        <n-button tertiary circle>
           <template #icon>
-            <n-icon><menu-icon /></n-icon>
+            <n-icon><check-icon /></n-icon>
           </template>
         </n-button>
       </template>
