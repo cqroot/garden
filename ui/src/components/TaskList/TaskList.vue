@@ -72,7 +72,7 @@ defineExpose({
     v-model:show="showConfirmModal"
     :mask-closable="false"
     preset="dialog"
-    title="Dialog"
+    title="Confirm"
     :content="currConfirmText"
     positive-text="Confirm"
     negative-text="Cancel"
