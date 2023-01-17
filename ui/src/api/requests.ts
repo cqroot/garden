@@ -15,7 +15,6 @@ function request() {
       return response;
     },
     function (error) {
-      console.log("request error");
       errorNotification(error.message);
       return Promise.reject(error);
     }
