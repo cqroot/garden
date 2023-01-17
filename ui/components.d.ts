@@ -14,6 +14,7 @@ declare module "@vue/runtime-core" {
     NCol: typeof import("naive-ui")["NCol"];
     NCollapse: typeof import("naive-ui")["NCollapse"];
     NCollapseItem: typeof import("naive-ui")["NCollapseItem"];
+    NCollapseTransition: typeof import("naive-ui")["NCollapseTransition"];
     NDropdown: typeof import("naive-ui")["NDropdown"];
     NewTaskPanel: typeof import("./src/components/NewTaskPanel.vue")["default"];
     NForm: typeof import("naive-ui")["NForm"];

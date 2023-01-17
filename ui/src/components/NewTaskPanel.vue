@@ -9,6 +9,7 @@ import type { Task } from "@/api/types";
 import { reqPutTask } from "@/api/requests";
 
 const task = ref({} as Task);
+const showNewTaskPanel = ref(false);
 
 const emit = defineEmits<{
   (e: "onTaskPut"): void;
@@ -17,18 +18,26 @@ const emit = defineEmits<{
 const putTask = () => {
   reqPutTask(task.value).then(() => {
     emit("onTaskPut");
+    showNewTaskPanel.value = false;
   });
 };
 </script>
 
 <template>
-  <n-collapse accordion>
-    <template #arrow>
-      <n-icon>
-        <add-icon />
-      </n-icon>
-    </template>
-    <n-collapse-item title="New Task" name="1">
+  <div>
+    <n-button
+      type="primary"
+      strong
+      @click="showNewTaskPanel = !showNewTaskPanel"
+      style="min-width: 100%"
+      class="mb-2"
+    >
+      <template #icon>
+        <n-icon><add-icon /></n-icon>
+      </template>
+      New Task
+    </n-button>
+    <n-collapse-transition :show="showNewTaskPanel" class="mb-2">
       <n-input
         class="mb-2"
         type="text"
@@ -43,32 +52,34 @@ const putTask = () => {
         v-model:value="task.note"
       />
 
-      <n-button class="mr-2">
-        <template #icon>
-          <n-icon>
-            <calendar-icon />
-          </n-icon>
-        </template>
-        Due date
-      </n-button>
+      <p style="padding: 0; margin: 0">
+        <n-button class="mr-2">
+          <template #icon>
+            <n-icon>
+              <calendar-icon />
+            </n-icon>
+          </template>
+          Due date
+        </n-button>
 
-      <n-button>
-        <template #icon>
-          <n-icon>
-            <list-icon />
-          </n-icon>
-        </template>
-        Inbox
-      </n-button>
+        <n-button>
+          <template #icon>
+            <n-icon>
+              <list-icon />
+            </n-icon>
+          </template>
+          Inbox
+        </n-button>
 
-      <n-button style="float: right" type="info" @click="putTask">
-        <template #icon>
-          <n-icon>
-            <add-icon />
-          </n-icon>
-        </template>
-        Add
-      </n-button>
-    </n-collapse-item>
-  </n-collapse>
+        <n-button style="float: right" type="primary" @click="putTask">
+          <template #icon>
+            <n-icon>
+              <add-icon />
+            </n-icon>
+          </template>
+          Add
+        </n-button>
+      </p>
+    </n-collapse-transition>
+  </div>
 </template>
