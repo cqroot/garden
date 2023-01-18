@@ -25,7 +25,7 @@ func PutTask(c *gin.Context) {
 
 	err = c.BindJSON(&task)
 	if err != nil {
-		middlewares.AbortWithError(c, err)
+		middlewares.AbortWithErrorAndBadRequestCode(c, err)
 		return
 	}
 
@@ -44,13 +44,19 @@ func UpdateTask(c *gin.Context) {
 
 	err = c.BindJSON(&task)
 	if err != nil {
-		middlewares.AbortWithError(c, err)
+		middlewares.AbortWithErrorAndBadRequestCode(c, err)
 		return
 	}
 
-    if _, exists := c.Get("id"); exists {
-        task.Id = c.GetUint("id")
-    }
+	if _, exists := c.Get("id"); exists {
+		task.Id = c.GetUint("id")
+	}
+
+	_, err = models.GetTasks()
+	if err != nil {
+		middlewares.AbortWithError(c, err)
+		return
+	}
 
 	err = models.UpdateTask(&task)
 	if err != nil {
@@ -73,16 +79,6 @@ func GetTask(c *gin.Context) {
 
 func DeleteTask(c *gin.Context) {
 	err := models.DeleteTask(c.GetUint("id"))
-	if err != nil {
-		middlewares.AbortWithError(c, err)
-		return
-	}
-
-	c.Status(http.StatusOK)
-}
-
-func MarkTaskDone(c *gin.Context) {
-	err := models.MarkTaskDone(c.GetUint("id"))
 	if err != nil {
 		middlewares.AbortWithError(c, err)
 		return

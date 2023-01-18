@@ -7,9 +7,9 @@ import (
 )
 
 func IdValidationMiddleware(c *gin.Context) {
-    id ,err := strconv.ParseUint(c.Param("id"), 10, 32)
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
-		AbortWithError(c, err)
+		AbortWithErrorAndBadRequestCode(c, err)
 		return
 	}
 

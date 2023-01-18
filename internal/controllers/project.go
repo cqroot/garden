@@ -15,7 +15,7 @@ func UpdateProject(c *gin.Context) {
 
 	err = c.BindJSON(&project)
 	if err != nil {
-		middlewares.AbortWithError(c, err)
+		middlewares.AbortWithErrorAndBadRequestCode(c, err)
 		return
 	}
 	if _, exists := c.Get("id"); exists {

@@ -12,7 +12,7 @@ run: build
 
 .PHONY: dev
 dev:
-	@nodemon -e "go" --exec go run main.go --signal SIGTERM
+	@GARDEN_LOG_LEVEL=Debug nodemon -e "go" --exec go run main.go --signal SIGTERM
 
 .PHONY: test
 test:

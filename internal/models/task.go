@@ -53,9 +53,3 @@ func GetTask(id uint) (*Task, error) {
 func DeleteTask(id uint) error {
 	return databases.DB().Delete(&Task{}, id).Error
 }
-
-func MarkTaskDone(id uint) error {
-	return databases.DB().
-		Model(&Task{Id: id}).
-		Update("status", Done).Error
-}

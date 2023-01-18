@@ -43,7 +43,6 @@ func NewRouter() (*gin.Engine, error) {
 			taskGroup.PUT("/:id", middlewares.IdValidationMiddleware, controllers.UpdateTask)
 			taskGroup.GET("/:id", middlewares.IdValidationMiddleware, controllers.GetTask)
 			taskGroup.DELETE("/:id", middlewares.IdValidationMiddleware, controllers.DeleteTask)
-			taskGroup.PUT("/status/:id", middlewares.IdValidationMiddleware, controllers.MarkTaskDone)
 		}
 
 		projectGroup := v1Group.Group("project")
