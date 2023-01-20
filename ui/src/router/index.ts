@@ -24,17 +24,16 @@ const router = createRouter({
     {
       path: "/today",
       name: "today",
-      component: () => import("@/views/AllView.vue"),
+      component: () => import("@/views/TodayView.vue"),
       meta: {
         title: "Today",
         icon: TodayIcon,
-        withDivider: true,
       },
     },
     {
       path: "/upcoming",
       name: "upcoming",
-      component: () => import("@/views/AllView.vue"),
+      component: () => import("@/views/UpcomingView.vue"),
       meta: {
         title: "Upcoming",
         icon: UpcomingIcon,

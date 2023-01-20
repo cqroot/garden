@@ -22,10 +22,26 @@ type Task struct {
 	Status  uint8  `json:"done" gorm:"default:0"`
 }
 
-func GetTasks() (*[]Task, error) {
+func GetTasks(dueStart int64, dueEnd int64) (*[]Task, error) {
 	var tasks []Task
 
-	err := databases.DB().Find(&tasks).Error
+	var err error
+	if dueStart != 0 && dueEnd != 0 {
+		err = databases.DB().
+			Where("due >= ?", dueStart).
+			Where("due <= ?", dueEnd).
+			Find(&tasks).Error
+	} else if dueStart == 0 && dueEnd != 0 {
+		err = databases.DB().
+			Where("due <= ?", dueEnd).
+			Find(&tasks).Error
+	} else if dueStart != 0 && dueEnd == 0 {
+		err = databases.DB().
+			Where("due >= ?", dueStart).
+			Find(&tasks).Error
+	} else {
+		err = databases.DB().Find(&tasks).Error
+	}
 	return &tasks, err
 }
 

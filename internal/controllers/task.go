@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 
@@ -10,7 +11,19 @@ import (
 )
 
 func GetTasks(c *gin.Context) {
-	tasks, err := models.GetTasks()
+	dueStart, err := strconv.ParseInt(
+		c.DefaultQuery("start", "0"),
+		10, 64)
+	dueEnd, err := strconv.ParseInt(
+		c.DefaultQuery("end", "0"),
+		10, 64)
+
+	if err != nil {
+		middlewares.AbortWithError(c, err)
+		return
+	}
+
+	tasks, err := models.GetTasks(dueStart, dueEnd)
 	if err != nil {
 		middlewares.AbortWithError(c, err)
 		return
@@ -52,7 +65,7 @@ func UpdateTask(c *gin.Context) {
 		task.Id = c.GetUint("id")
 	}
 
-	_, err = models.GetTasks()
+	_, err = models.GetTask(task.Id)
 	if err != nil {
 		middlewares.AbortWithError(c, err)
 		return

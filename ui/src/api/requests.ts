@@ -34,8 +34,13 @@ export function reqGet404() {
   return request().get("/status/404");
 }
 
-export function reqGetTasks() {
-  return request().get<Task[]>("/task");
+export function reqGetTasks(dueStart: number, dueEnd: number) {
+  return request().get<Task[]>("/task", {
+    params: {
+      start: dueStart,
+      end: dueEnd,
+    },
+  });
 }
 
 export function reqGetTask(id: number) {

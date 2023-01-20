@@ -15,8 +15,8 @@ const handleTaskSubmit = (id: number) => {
   taskListRef.value.updateTask(id);
 };
 
-const updateTasks = () => {
-  taskListRef.value.updateTasks();
+const updateTasks = (dueStart: number, dueEnd: number) => {
+  taskListRef.value.updateTasks(dueStart, dueEnd);
 };
 
 const updateTask = (id: number) => {

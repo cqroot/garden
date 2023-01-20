@@ -6,8 +6,8 @@ import { ref } from "vue";
 export function useTasks() {
   const tasks = ref([] as Task[]);
 
-  const updateTasks = () => {
-    reqGetTasks().then((response) => {
+  const updateTasks = (dueStart: number, dueEnd: number) => {
+    reqGetTasks(dueStart, dueEnd).then((response) => {
       tasks.value = response.data;
     });
   };
