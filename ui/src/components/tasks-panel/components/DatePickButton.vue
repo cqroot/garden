@@ -12,8 +12,13 @@ const dueButtonText = computed(() => {
   }
 });
 
+const setTimestamp = (ts: number) => {
+  timestamp.value = ts;
+};
+
 defineExpose({
   timestamp,
+  setTimestamp,
 });
 </script>
 

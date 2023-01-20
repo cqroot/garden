@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import type { Task } from "@/api/types";
 import { reqGetTask, reqUpdateTask } from "@/api/requests";
+import DatePickButton from "./DatePickButton.vue";
 
 const showEditModal = ref(false);
 const currTask = ref({} as Task);
@@ -17,6 +18,8 @@ const rules = {
     trigger: ["input"],
   },
 };
+const datePickButtonRef = ref();
+
 const emit = defineEmits<{
   (e: "onTaskSubmit", id: number): void;
 }>();
@@ -24,11 +27,13 @@ const emit = defineEmits<{
 function open(id: number) {
   reqGetTask(id).then((response) => {
     currTask.value = response.data;
+    datePickButtonRef.value.setTimestamp(currTask.value.due);
   });
   showEditModal.value = true;
 }
 
 function submitTask() {
+  currTask.value.due = datePickButtonRef.value.timestamp;
   reqUpdateTask(currTask.value.id, currTask.value).then(() => {
     emit("onTaskSubmit", currTask.value.id);
   });
@@ -55,13 +60,18 @@ defineExpose({
         <n-form-item label="Note" path="user.age">
           <n-input v-model:value="currTask.note" placeholder="Input note" />
         </n-form-item>
-        <n-row :gutter="[0, 24]">
-          <n-col :span="24">
+        <n-grid :x-gap="12" :y-gap="8" :cols="4">
+          <n-grid-item>
+            <date-pick-button ref="datePickButtonRef" />
+          </n-grid-item>
+          <n-grid-item> </n-grid-item>
+          <n-grid-item> </n-grid-item>
+          <n-grid-item>
             <div style="display: flex; justify-content: flex-end">
               <n-button type="primary" @click="submitTask"> Confirm </n-button>
             </div>
-          </n-col>
-        </n-row>
+          </n-grid-item>
+        </n-grid>
       </n-form>
     </n-card>
   </n-modal>
