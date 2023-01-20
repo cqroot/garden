@@ -65,7 +65,9 @@ defineExpose({
       </template>
 
       <n-thing :title="task.title">
-        {{ task.note }}
+        <template #description>
+          <p class="text-zinc-500 m-0 mb-1 p-0">{{ task.note }}</p>
+        </template>
       </n-thing>
       <n-tag size="small" :bordered="false" type="success" v-if="task.due != 0">
         <template #icon>
