@@ -2,7 +2,9 @@
 import {
   CheckmarkSharp as CheckIcon,
   MenuSharp as MenuIcon,
+  CalendarSharp as CalendarIcon,
 } from "@vicons/ionicons5";
+import { formattedDate } from "@/api/date";
 import { useTaskList } from "./task-list";
 
 const {
@@ -65,6 +67,14 @@ defineExpose({
       <n-thing :title="task.title">
         {{ task.note }}
       </n-thing>
+      <n-tag size="small" :bordered="false" type="success" v-if="task.due != 0">
+        <template #icon>
+          <n-icon>
+            <calendar-icon />
+          </n-icon>
+        </template>
+        {{ formattedDate(task.due) }}
+      </n-tag>
     </n-list-item>
   </n-list>
 

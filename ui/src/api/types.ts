@@ -3,7 +3,7 @@ type Task = {
   title: string;
   note: string;
   project: number;
-  // due: time;
+  due: number;
   status: number;
 };
 
@@ -13,5 +13,6 @@ export function copyTask(src: Task, dst: Task) {
   src.title = dst.title;
   src.note = dst.note;
   src.project = dst.project;
+  src.due = dst.due;
   src.status = dst.status;
 }

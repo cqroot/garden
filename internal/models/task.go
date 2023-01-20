@@ -1,8 +1,6 @@
 package models
 
 import (
-	"time"
-
 	"github.com/cqroot/garden/internal/databases"
 	"gorm.io/gorm/clause"
 )
@@ -16,12 +14,12 @@ const (
 )
 
 type Task struct {
-	Id      uint      `json:"id"    gorm:"unique;AUTO_INCREMENT"`
-	Title   string    `json:"title" gorm:"not null"`
-	Note    string    `json:"note"`
-	Project int       `json:"project"`
-	Due     time.Time `json:"due"`
-	Status  uint8     `json:"done" gorm:"default:0"`
+	Id      uint   `json:"id"    gorm:"unique;AUTO_INCREMENT"`
+	Title   string `json:"title" gorm:"not null"`
+	Note    string `json:"note"`
+	Project int    `json:"project"`
+	Due     int64  `json:"due"`
+	Status  uint8  `json:"done" gorm:"default:0"`
 }
 
 func GetTasks() (*[]Task, error) {

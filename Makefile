@@ -10,9 +10,17 @@ build:
 run: build
 	@GARDEN_LOG_LEVEL=Debug $(BUILD_DIR)/$(PROJ_NAME)
 
-.PHONY: dev
-dev:
+.PHONY: clean
+clean:
+	rm -rf "$$(go run main.go print-data-path)"
+
+.PHONY: server-dev
+server-dev:
 	@GARDEN_LOG_LEVEL=Debug nodemon -e "go" --exec go run main.go --signal SIGTERM
+
+.PHONY: ui-dev
+ui-dev:
+	@cd $(CURDIR)/ui && npm run dev
 
 .PHONY: test
 test:

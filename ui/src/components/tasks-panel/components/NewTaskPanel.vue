@@ -1,22 +1,27 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import {
-  CalendarSharp as CalendarIcon,
   ListSharp as ListIcon,
   AddCircle as AddIcon,
   ArrowUpCircle as CollapseIcon,
 } from "@vicons/ionicons5";
 import type { Task } from "@/api/types";
 import { reqPutTask } from "@/api/requests";
+import DatePickButton from "./DatePickButton.vue";
 
 const task = ref({} as Task);
 const showNewTaskPanel = ref(false);
+const datePickButtonRef = ref();
 
 const emit = defineEmits<{
   (e: "onTaskPut"): void;
 }>();
 
-const putTask = () => {
+const handlePutTask = () => {
+  const timestamp = datePickButtonRef.value.timestamp;
+  if (timestamp != 0 && timestamp != null) {
+    task.value.due = timestamp;
+  }
   reqPutTask(task.value).then(() => {
     emit("onTaskPut");
     showNewTaskPanel.value = false;
@@ -68,34 +73,25 @@ const putTask = () => {
         v-model:value="task.note"
       />
 
-      <p style="padding: 0; margin: 0">
-        <n-button class="mr-2">
-          <template #icon>
-            <n-icon>
-              <calendar-icon />
-            </n-icon>
-          </template>
-          Due date
-        </n-button>
+      <date-pick-button ref="datePickButtonRef" />
 
-        <n-button>
-          <template #icon>
-            <n-icon>
-              <list-icon />
-            </n-icon>
-          </template>
-          Inbox
-        </n-button>
+      <n-button>
+        <template #icon>
+          <n-icon>
+            <list-icon />
+          </n-icon>
+        </template>
+        Inbox
+      </n-button>
 
-        <n-button style="float: right" type="primary" @click="putTask">
-          <template #icon>
-            <n-icon>
-              <add-icon />
-            </n-icon>
-          </template>
-          Add
-        </n-button>
-      </p>
+      <n-button style="float: right" type="primary" @click="handlePutTask">
+        <template #icon>
+          <n-icon>
+            <add-icon />
+          </n-icon>
+        </template>
+        Add
+      </n-button>
     </n-collapse-transition>
   </div>
 </template>
