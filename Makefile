@@ -3,8 +3,8 @@ BUILD_DIR=$(CURDIR)/.build
 
 .PHONY: build
 build:
-	@go build -o "$(BUILD_DIR)/$(PROJ_NAME)" $(CURDIR)/main.go
 	@cd $(CURDIR)/ui && npm run build
+	@go build -o "$(BUILD_DIR)/$(PROJ_NAME)" $(CURDIR)/main.go
 
 .PHONY: run
 run: build

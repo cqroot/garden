@@ -4,6 +4,7 @@ import {
   CalendarSharp as CalendarIcon,
   ListSharp as ListIcon,
   AddCircle as AddIcon,
+  ArrowUpCircle as CollapseIcon,
 } from "@vicons/ionicons5";
 import type { Task } from "@/api/types";
 import { reqPutTask } from "@/api/requests";
@@ -26,8 +27,23 @@ const putTask = () => {
 <template>
   <div>
     <n-button
+      v-if="showNewTaskPanel"
+      strong
+      :focusable="false"
+      @click="showNewTaskPanel = !showNewTaskPanel"
+      style="min-width: 100%"
+      class="mb-2"
+    >
+      <template #icon>
+        <n-icon><collapse-icon /></n-icon>
+      </template>
+      Collapse
+    </n-button>
+    <n-button
+      v-else
       type="primary"
       strong
+      :focusable="false"
       @click="showNewTaskPanel = !showNewTaskPanel"
       style="min-width: 100%"
       class="mb-2"

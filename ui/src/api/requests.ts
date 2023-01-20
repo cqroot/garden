@@ -1,12 +1,11 @@
 import axios from "axios";
 import type { Task } from "@/api/types";
-import { errorNotification } from "@/api/notification";
 
 function request() {
   const instance = axios.create({
     baseURL:
       process.env.NODE_ENV === "production"
-        ? "/v1/"
+        ? "/v1"
         : "http://localhost:8000/v1",
   });
 
@@ -15,12 +14,24 @@ function request() {
       return response;
     },
     function (error) {
-      errorNotification(error.message);
+      window.$notification.error({
+        content: error.message,
+        duration: 2500,
+        keepAliveOnHover: true,
+      });
       return Promise.reject(error);
     }
   );
 
   return instance;
+}
+
+export function reqGet200() {
+  return request().get("/status/200");
+}
+
+export function reqGet404() {
+  return request().get("/status/404");
 }
 
 export function reqGetTasks() {
@@ -41,8 +52,4 @@ export function reqUpdateTask(id: number, task: Task) {
 
 export function reqDeleteTask(id: number) {
   return request().delete(`/task/${id}`);
-}
-
-export function reqMarkTaskDone(id: number) {
-  return request().put(`/task/status/${id}`);
 }

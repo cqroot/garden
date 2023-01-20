@@ -58,6 +58,9 @@ func NewRouter() (*gin.Engine, error) {
 		return nil, err
 	}
 	router.StaticFS("/ui", http.FS(fDist))
+	router.NoRoute(func(c *gin.Context) {
+		c.FileFromFS("index.html", http.FS(fDist))
+	})
 
 	return router, nil
 }

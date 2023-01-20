@@ -3,7 +3,7 @@ import {
   CheckmarkSharp as CheckIcon,
   MenuSharp as MenuIcon,
 } from "@vicons/ionicons5";
-import { useTaskList } from "./TaskList";
+import { useTaskList } from "./task-list";
 
 const {
   tasks,
