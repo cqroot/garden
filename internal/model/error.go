@@ -1,4 +1,4 @@
-package models
+package model
 
 import (
 	"errors"
@@ -6,6 +6,6 @@ import (
 	"gorm.io/gorm"
 )
 
-func IsErrNotFound(err error) bool {
+func (m Model) IsErrNotFound(err error) bool {
 	return errors.Is(err, gorm.ErrRecordNotFound)
 }

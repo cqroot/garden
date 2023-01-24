@@ -1,4 +1,4 @@
-package middlewares
+package middleware
 
 import (
 	"time"
@@ -14,7 +14,7 @@ type LogFields struct {
 	Path       string
 }
 
-func LoggerMiddleware(logFunc func(LogFields)) gin.HandlerFunc {
+func (m Middleware) LoggerMiddleware(logFunc func(LogFields)) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		start := time.Now()
 		path := c.Request.URL.Path

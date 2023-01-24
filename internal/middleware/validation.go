@@ -1,4 +1,4 @@
-package middlewares
+package middleware
 
 import (
 	"strconv"
@@ -6,10 +6,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func IdValidationMiddleware(c *gin.Context) {
+func (m Middleware) IdValidationMiddleware(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
-		AbortWithErrorAndBadRequestCode(c, err)
+		m.AbortWithErrorAndBadRequestCode(c, err)
 		return
 	}
 

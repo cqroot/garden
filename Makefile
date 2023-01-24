@@ -4,6 +4,7 @@ BUILD_DIR=$(CURDIR)/.build
 .PHONY: build
 build:
 	@cd $(CURDIR)/ui && npm run build
+	@cd $(CURDIR)/internal/server && wire
 	@go build -o "$(BUILD_DIR)/$(PROJ_NAME)" $(CURDIR)/main.go
 
 .PHONY: run
@@ -16,6 +17,7 @@ clean:
 
 .PHONY: server-dev
 server-dev:
+	@cd $(CURDIR)/internal/server && wire
 	@GARDEN_LOG_LEVEL=Debug nodemon -e "go" --exec go run main.go --signal SIGTERM
 
 .PHONY: ui-dev

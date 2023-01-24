@@ -1,4 +1,4 @@
-package app
+package logger
 
 import (
 	"os"
@@ -7,11 +7,13 @@ import (
 
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
+
+	"github.com/cqroot/garden/internal/config"
 )
 
-var (
+type Logger struct {
 	zapLogger *zap.Logger
-)
+}
 
 func getZapEncoder() zapcore.Encoder {
 	encoderConfig := zap.NewProductionEncoderConfig()
@@ -24,13 +26,16 @@ func getZapEncoder() zapcore.Encoder {
 	return encoder
 }
 
-func InitLogger(logLevel string, caller bool) {
+func New(config *config.Config) *Logger {
+	logger := Logger{}
+
+	logLevel := strings.ToLower(config.LogLevel())
+
 	writeSyncer := zapcore.AddSync(os.Stdout)
 
 	var core zapcore.Core
 
-	level := strings.ToLower(logLevel)
-	switch level {
+	switch logLevel {
 	case "debug":
 		core = zapcore.NewCore(getZapEncoder(), writeSyncer, zapcore.DebugLevel)
 	case "info":
@@ -41,17 +46,31 @@ func InitLogger(logLevel string, caller bool) {
 		core = zapcore.NewCore(getZapEncoder(), writeSyncer, zapcore.ErrorLevel)
 	}
 
-	if caller {
-		zapLogger = zap.New(core, zap.AddCaller())
+	if config.LogWithCaller() {
+		logger.zapLogger = zap.New(core, zap.AddCaller())
 	} else {
-		zapLogger = zap.New(core)
+		logger.zapLogger = zap.New(core)
 	}
 
-	if logLevel == "Debug" {
-		Logger().Debug("Enable debug output")
+	if logLevel == "debug" {
+		logger.Debug("Enable debug output")
 	}
+
+	return &logger
 }
 
-func Logger() *zap.Logger {
-	return zapLogger
+func (logger *Logger) Debug(msg string, fields ...zap.Field) {
+	logger.zapLogger.Debug(msg, fields...)
+}
+
+func (logger *Logger) Info(msg string, fields ...zap.Field) {
+	logger.zapLogger.Info(msg, fields...)
+}
+
+func (logger *Logger) Error(msg string, fields ...zap.Field) {
+	logger.zapLogger.Error(msg, fields...)
+}
+
+func (logger *Logger) Fatal(msg string, fields ...zap.Field) {
+	logger.zapLogger.Fatal(msg, fields...)
 }

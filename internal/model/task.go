@@ -1,7 +1,6 @@
-package models
+package model
 
 import (
-	"github.com/cqroot/garden/internal/databases"
 	"gorm.io/gorm/clause"
 )
 
@@ -22,48 +21,48 @@ type Task struct {
 	Status  uint8  `json:"done" gorm:"default:0"`
 }
 
-func GetTasks(dueStart int64, dueEnd int64) (*[]Task, error) {
+func (m Model) GetTasks(dueStart int64, dueEnd int64) (*[]Task, error) {
 	var tasks []Task
 
 	var err error
 	if dueStart != 0 && dueEnd != 0 {
-		err = databases.DB().
+		err = m.database.DB().
 			Where("due >= ?", dueStart).
 			Where("due <= ?", dueEnd).
 			Find(&tasks).Error
 	} else if dueStart == 0 && dueEnd != 0 {
-		err = databases.DB().
+		err = m.database.DB().
 			Where("due <= ?", dueEnd).
 			Find(&tasks).Error
 	} else if dueStart != 0 && dueEnd == 0 {
-		err = databases.DB().
+		err = m.database.DB().
 			Where("due >= ?", dueStart).
 			Find(&tasks).Error
 	} else {
-		err = databases.DB().Find(&tasks).Error
+		err = m.database.DB().Find(&tasks).Error
 	}
 	return &tasks, err
 }
 
-func PutTask(task *Task) error {
-	return databases.DB().Create(task).Error
+func (m Model) PutTask(task *Task) error {
+	return m.database.DB().Create(task).Error
 }
 
-func UpdateTask(task *Task) error {
-	err := databases.DB().Clauses(clause.OnConflict{
+func (m Model) UpdateTask(task *Task) error {
+	err := m.database.DB().Clauses(clause.OnConflict{
 		UpdateAll: true,
 	}).Create(task).Error
 
 	return err
 }
 
-func GetTask(id uint) (*Task, error) {
+func (m Model) GetTask(id uint) (*Task, error) {
 	var task Task
 
-	err := databases.DB().First(&task, id).Error
+	err := m.database.DB().First(&task, id).Error
 	return &task, err
 }
 
-func DeleteTask(id uint) error {
-	return databases.DB().Delete(&Task{}, id).Error
+func (m Model) DeleteTask(id uint) error {
+	return m.database.DB().Delete(&Task{}, id).Error
 }

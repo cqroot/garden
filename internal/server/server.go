@@ -3,35 +3,22 @@ package server
 import (
 	"fmt"
 
-	"github.com/cqroot/garden/internal/app"
-	"github.com/cqroot/garden/internal/databases"
-	"github.com/cqroot/garden/internal/models"
 	"go.uber.org/zap"
 )
 
-func Run() error {
+func (s Server) Run() error {
 	var err error
 
-	err = databases.InitDatabase()
+	r, err := s.NewRouter()
 	if err != nil {
 		return err
 	}
 
-	err = models.AutoMigrate()
-	if err != nil {
-		return err
-	}
-
-	r, err := NewRouter()
-	if err != nil {
-		return err
-	}
-
-	app.Logger().Debug("Listen and Server",
-		zap.String("IP", app.Config().BindIp()),
-		zap.Int("Port", app.Config().BindPort()))
+	s.logger.Debug("Listen and Server",
+		zap.String("IP", s.config.BindIp()),
+		zap.Int("Port", s.config.BindPort()))
 	err = r.Run(
-		fmt.Sprintf("%s:%d", app.Config().BindIp(), app.Config().BindPort()),
+		fmt.Sprintf("%s:%d", s.config.BindIp(), s.config.BindPort()),
 	)
 
 	return err

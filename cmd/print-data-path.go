@@ -3,7 +3,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/cqroot/garden/internal/app"
+	"github.com/cqroot/garden/internal/config"
 	"github.com/spf13/cobra"
 )
 
@@ -17,9 +17,9 @@ var printDataPathCmd = &cobra.Command{
 	Short: "Print data path",
 	Long:  "Print data path",
 	Run: func(cmd *cobra.Command, args []string) {
-		err := app.Bootstrap()
+		config, err := config.New()
 		cobra.CheckErr(err)
 
-		fmt.Println(app.Config().DataPath())
+		fmt.Println(config.DataPath())
 	},
 }

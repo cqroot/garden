@@ -1,4 +1,4 @@
-package app
+package config
 
 import (
 	"errors"
@@ -13,12 +13,10 @@ type configItem struct {
 	Value any
 }
 
-type ConfigProvider struct {
+type Config struct {
 	configs       []configItem
 	viperInstance *viper.Viper
 }
-
-var configProvider ConfigProvider
 
 func initDataDir() (string, error) {
 	dataPath, err := xdg.DataFile("garden")
@@ -36,13 +34,13 @@ func initDataDir() (string, error) {
 	return dataPath, nil
 }
 
-func InitConfig() error {
+func New() (*Config, error) {
 	dataPath, err := initDataDir()
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	configProvider = ConfigProvider{
+	config := Config{
 		configs: []configItem{
 			{
 				Key:   "bind_ip",
@@ -57,6 +55,10 @@ func InitConfig() error {
 				Value: "Info",
 			},
 			{
+				Key:   "log_with_caller",
+				Value: false,
+			},
+			{
 				Key:   "data_path",
 				Value: dataPath,
 			},
@@ -64,36 +66,36 @@ func InitConfig() error {
 		viperInstance: viper.New(),
 	}
 
-	configProvider.viperInstance.SetTypeByDefaultValue(true)
-	configProvider.viperInstance.SetEnvPrefix("GARDEN")
+	config.viperInstance.SetTypeByDefaultValue(true)
+	config.viperInstance.SetEnvPrefix("GARDEN")
 
-	for _, conf := range configProvider.configs {
-		configProvider.viperInstance.SetDefault(conf.Key, conf.Value)
-		err := configProvider.viperInstance.BindEnv(conf.Key)
+	for _, conf := range config.configs {
+		config.viperInstance.SetDefault(conf.Key, conf.Value)
+		err := config.viperInstance.BindEnv(conf.Key)
 		if err != nil {
-			return err
+			return nil, err
 		}
 	}
 
-	return nil
+	return &config, nil
 }
 
-func Config() *ConfigProvider {
-	return &configProvider
-}
-
-func (c *ConfigProvider) BindIp() string {
+func (c *Config) BindIp() string {
 	return c.viperInstance.GetString("bind_ip")
 }
 
-func (c *ConfigProvider) BindPort() int {
+func (c *Config) BindPort() int {
 	return c.viperInstance.GetInt("bind_port")
 }
 
-func (c *ConfigProvider) LogLevel() string {
+func (c *Config) LogLevel() string {
 	return c.viperInstance.GetString("log_level")
 }
 
-func (c *ConfigProvider) DataPath() string {
+func (c *Config) LogWithCaller() bool {
+	return c.viperInstance.GetBool("log_with_caller")
+}
+
+func (c *Config) DataPath() string {
 	return c.viperInstance.GetString("data_path")
 }
