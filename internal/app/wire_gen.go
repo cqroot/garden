@@ -4,7 +4,7 @@
 //go:build !wireinject
 // +build !wireinject
 
-package server
+package app
 
 import (
 	"github.com/cqroot/garden/internal/config"
@@ -17,7 +17,7 @@ import (
 
 // Injectors from wire.go:
 
-func InitServer() (*Server, error) {
+func InitApp() (*App, error) {
 	configConfig, err := config.New()
 	if err != nil {
 		return nil, err
@@ -33,6 +33,6 @@ func InitServer() (*Server, error) {
 	}
 	middlewareMiddleware := middleware.New(configConfig, loggerLogger, modelModel)
 	controllerController := controller.New(configConfig, loggerLogger, modelModel, middlewareMiddleware)
-	server := New(configConfig, loggerLogger, middlewareMiddleware, controllerController)
-	return server, nil
+	app := New(configConfig, loggerLogger, middlewareMiddleware, controllerController)
+	return app, nil
 }

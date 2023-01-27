@@ -1,4 +1,4 @@
-package server
+package app
 
 import (
 	"github.com/cqroot/garden/internal/config"
@@ -7,15 +7,15 @@ import (
 	"github.com/cqroot/garden/internal/middleware"
 )
 
-type Server struct {
+type App struct {
 	config     *config.Config
 	logger     *logger.Logger
 	middleware *middleware.Middleware
 	controller *controller.Controller
 }
 
-func New(config *config.Config, logger *logger.Logger, middleware *middleware.Middleware, controller *controller.Controller) *Server {
-	return &Server{
+func New(config *config.Config, logger *logger.Logger, middleware *middleware.Middleware, controller *controller.Controller) *App {
+	return &App{
 		config:     config,
 		logger:     logger,
 		middleware: middleware,

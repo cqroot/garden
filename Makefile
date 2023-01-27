@@ -1,24 +1,29 @@
 PROJ_NAME=garden
 BUILD_DIR=$(CURDIR)/.build
 
-.PHONY: build
-build:
+.PHONY: build-ui
+build-ui:
 	@cd $(CURDIR)/ui && npm run build
-	@cd $(CURDIR)/internal/server && wire
+
+.PHONY: build-go
+build-go:
+	@cd $(CURDIR)/internal/app && wire
 	@go build -o "$(BUILD_DIR)/$(PROJ_NAME)" $(CURDIR)/main.go
 
-.PHONY: run
-run: build
+.PHONY: build
+build: build-ui build-go
+
+.PHONY: run-without-ui
+run-without-ui: build-go
+	@cd $(CURDIR)/internal/app && wire
 	@GARDEN_LOG_LEVEL=Debug $(BUILD_DIR)/$(PROJ_NAME)
+
+.PHONY: run
+run: build-ui run-without-ui
 
 .PHONY: clean
 clean:
 	rm -rf "$$(go run main.go print-data-path)"
-
-.PHONY: server-dev
-server-dev:
-	@cd $(CURDIR)/internal/server && wire
-	@GARDEN_LOG_LEVEL=Debug nodemon -e "go" --exec go run main.go --signal SIGTERM
 
 .PHONY: ui-dev
 ui-dev:

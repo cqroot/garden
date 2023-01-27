@@ -1,7 +1,7 @@
 //go:build wireinject
 // +build wireinject
 
-package server
+package app 
 
 import (
 	"github.com/google/wire"
@@ -14,7 +14,7 @@ import (
 	"github.com/cqroot/garden/internal/model"
 )
 
-func InitServer() (*Server, error) {
+func InitApp() (*App, error) {
 	wire.Build(
 		config.New,
 		logger.New,
@@ -24,5 +24,5 @@ func InitServer() (*Server, error) {
 		controller.New,
 		New,
 	)
-	return &Server{}, nil
+	return &App{}, nil
 }

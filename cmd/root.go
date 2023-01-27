@@ -3,7 +3,7 @@ package cmd
 import (
 	"github.com/spf13/cobra"
 
-	"github.com/cqroot/garden/internal/server"
+	"github.com/cqroot/garden/internal/app"
 )
 
 var (
@@ -21,9 +21,5 @@ func Execute() {
 }
 
 func runRootCmd(cmd *cobra.Command, args []string) {
-	server, err := server.InitServer()
-	cobra.CheckErr(err)
-
-	err = server.Run()
-	cobra.CheckErr(err)
+	cobra.CheckErr(app.Run())
 }
