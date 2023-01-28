@@ -6,6 +6,9 @@ import { formattedDate } from "@/api/date";
 const props = defineProps({
   timestamp: { type: Number, default: 0 },
 });
+const emit = defineEmits<{
+  (e: "update:timestamp", timestamp: number): void;
+}>();
 const timestamp = ref(props.timestamp);
 
 const dueButtonText = computed(() => {
@@ -16,14 +19,10 @@ const dueButtonText = computed(() => {
   }
 });
 
-// const setTimestamp = (ts: number) => {
-//   timestamp.value = ts;
-// };
-
-// defineExpose({
-//   timestamp,
-//   setTimestamp,
-// });
+function handleTimestampUpdate(ts: number) {
+  timestamp.value = ts;
+  emit("update:timestamp", timestamp.value);
+}
 </script>
 
 <template>
@@ -38,6 +37,12 @@ const dueButtonText = computed(() => {
         {{ dueButtonText }}
       </n-button>
     </template>
-    <n-date-picker panel type="date" clearable v-model:value="timestamp" />
+    <n-date-picker
+      panel
+      type="date"
+      clearable
+      :value="timestamp"
+      :on-update:value="handleTimestampUpdate"
+    />
   </n-popover>
 </template>

@@ -45,7 +45,7 @@ const rules = {
         </n-form-item>
         <n-grid :x-gap="12" :y-gap="8" :cols="4">
           <n-grid-item>
-            <date-pick-button :timestamp="timestamp" />
+            <date-pick-button v-model:timestamp="timestamp" />
           </n-grid-item>
           <n-grid-item> </n-grid-item>
           <n-grid-item> </n-grid-item>

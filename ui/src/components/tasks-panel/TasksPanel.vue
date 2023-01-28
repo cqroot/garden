@@ -29,7 +29,11 @@ defineExpose({
 
 <template>
   <n-layout position="absolute">
-    <n-layout position="absolute" style="bottom: 64px; padding: 24px">
+    <n-layout
+      :native-scrollbar="false"
+      position="absolute"
+      style="bottom: 64px; padding: 24px"
+    >
       <task-list ref="taskListRef" @on-task-click="handleEditTask" />
     </n-layout>
     <n-layout-footer bordered position="absolute" style="height: 64px">

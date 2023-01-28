@@ -64,10 +64,7 @@ const { currentTheme, toggleTheme } = useTheme();
         >
           <router-menu />
         </n-layout-sider>
-        <n-layout-content
-          :native-scrollbar="false"
-          content-style="padding: 24px;"
-        >
+        <n-layout-content>
           <slot />
         </n-layout-content>
       </n-layout>
