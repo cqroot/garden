@@ -26,14 +26,6 @@ function request() {
   return instance;
 }
 
-export function reqGet200() {
-  return request().get("/status/200");
-}
-
-export function reqGet404() {
-  return request().get("/status/404");
-}
-
 export function reqGetTasks(dueStart: number, dueEnd: number) {
   return request().get<Task[]>("/task", {
     params: {

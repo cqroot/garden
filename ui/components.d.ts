@@ -7,8 +7,7 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    DatePickButton: typeof import('./src/components/tasks-panel/components/DatePickButton.vue')['default']
-    EditModal: typeof import('./src/components/tasks-panel/components/EditModal.vue')['default']
+    DatePickButton: typeof import('./src/components/task-dialog/DatePickButton.vue')['default']
     NButton: typeof import('naive-ui')['NButton']
     NCard: typeof import('naive-ui')['NCard']
     NCollapseTransition: typeof import('naive-ui')['NCollapseTransition']
@@ -38,6 +37,7 @@ declare module '@vue/runtime-core' {
     NThing: typeof import('naive-ui')['NThing']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    TaskDialog: typeof import('./src/components/task-dialog/TaskDialog.vue')['default']
     TaskList: typeof import('./src/components/tasks-panel/components/TaskList.vue')['default']
     TasksPanel: typeof import('./src/components/tasks-panel/TasksPanel.vue')['default']
   }

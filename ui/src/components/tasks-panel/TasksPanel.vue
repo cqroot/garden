@@ -2,17 +2,12 @@
 import { ref } from "vue";
 import NewTaskPanel from "./components/NewTaskPanel.vue";
 import TaskList from "./components/TaskList.vue";
-import EditModal from "./components/EditModal.vue";
 
 const taskListRef = ref();
-const editModalRef = ref();
+const taskDialogRef = ref();
 
 const handleTaskClick = (id: number) => {
-  editModalRef.value.open(id);
-};
-
-const handleTaskSubmit = (id: number) => {
-  taskListRef.value.updateTask(id);
+  taskDialogRef.value.editTask(id);
 };
 
 const updateTasks = (dueStart: number, dueEnd: number) => {
@@ -32,5 +27,9 @@ defineExpose({
 <template>
   <new-task-panel @on-task-put="updateTasks" />
   <task-list ref="taskListRef" @on-task-click="handleTaskClick" />
-  <edit-modal ref="editModalRef" @on-task-submit="handleTaskSubmit" />
+  <task-dialog
+    ref="taskDialogRef"
+    @on-task-create="updateTasks"
+    @on-task-update="updateTask"
+  />
 </template>
